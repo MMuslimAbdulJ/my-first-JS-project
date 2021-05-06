@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penghitung Indeks Massa Tubuh</title>
+    <style>
+      label,
+      input,
+      button,
+      textarea {
+        display: block;
+        margin: auto;
+        text-align: center;
+      }
+      input {
+        width: 50px;
+        margin-top: 5px;
+        border: 1px solid burlywood;
+      }
+      .container {
+        margin: 50px auto;
+        max-width: 200px;
+        /* border: 3px solid black; */
+        background-color: #fff;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+      }
+      input,
+      button {
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+      h1 {
+        text-align: center;
+        color: burlywood;
+      }
+      body {
+        background-image: url(bg.png);
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      textarea {
+        height: 19px;
+        width: 51px;
+        text-align: center;
+        resize: none;
+        border: 1px solid rgb(55, 138, 182);
+        border-radius: 4px;
+      }
+      .kategori {
+        width: 170px;
+        height: 75px;
+      }
+      .imt {
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+      .hitung {
+        background-color: #ccc;
+        border: none;
+        width: 150px;
+        height: 30px;
+        padding: 5px;
+      }
+      .hitung:hover {
+        transform: scale(1.03);
+      }
+      .reset {
+        background-color: rgb(197, 29, 29);
+        border: none;
+        margin-top: 10px;
+        height: 40px;
+      }
+      .reset:hover {
+        transform: scale(1.03);
+      }
+      hr {
+        width: 400px;
+      }
+      footer {
+        text-align: center;
+        background-color: #ccc;
+        margin-bottom: -50px;
+        width: 100%;
+        padding: 7px;
+      }
+      footer a {
+        color: rgb(197, 29, 29);
+        font-weight: bold;
+        
+      }
+      .kemenkes {
+        position: absolute;
+        bottom: -60px;
+        color: burlywood;
+      }
+      @media (max-width: 380px) {
+        .container {
+          max-width: 80%;
+        }
+        hr {
+          max-width: 70%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Penghitung Indeks Massa Tubuh 1.0</h1>
+    <hr />
+    <div class="container">
+      <label for="">Masukkan berat badan kamu (Kg) :</label>
+      <input type="number" class="bBadan" />
+      <label for="">Masukkan tinggi badan kamu (Cm) :</label>
+      <input type="number" class="tBadan" />
+      <button type="button" class="hitung">Hitung IMT Kamu!</button>
+      <label for="" class="imt">Hasil angka IMT kamu :</label>
+      <textarea name="" id="" cols="" rows="" class="hasil" readonly></textarea>
+      <label for="" class="imt">Kategori :</label>
+      <textarea class="kategori"></textarea>
+      <button type="reset" class="reset">Reset</button>
+      <p class="kemenkes"><em>*data diambil menurut standar Kemenkes RI</em></p>
+    </div>
+    
+    <footer>
+      <p>Copyright <a href="https://www.facebook.com/mmuslimabdulj" target="_blank">M Muslim Abdul J</a> 2021.</p>
+    </footer>
+    <script>
+      document.querySelector('button').addEventListener('click', () => {
+        // Mengambil data berat badan dalam bentuk Kg
+        const beratBadan = document.querySelector('.bBadan').value;
+        // Mengambil data tinggi badan
+        const tinggiBadanCm = document.querySelector('.tBadan').value;
+        // Mengconvert tinggi badan kedalam meter
+        const tinggiBadanMeter = tinggiBadanCm / 100;
+        // mengkuadratkan hasil realDataTinggiBadan
+        const realDataTinggiBadan = tinggiBadanMeter ** 2;
+        // membagi data berat badan dengan hasil convert tinggi badan dikali 2
+        const hasil = beratBadan / realDataTinggiBadan;
+        // tampilkan hasil IMT
+        document.querySelector('.hasil').innerHTML = hasil.toFixed(1);
+        // const tampilIMT = hasil.toFixed(1);
+        // Tambahkan pesan tentang hasil dari IMT baik berupa kurus, normal, gemuk
+        let tampilHasilAkhir = '';
+        if (hasil < 17.0) {
+          tampilHasilAkhir = 'Kamu termasuk kategori berbadan Kurus, dan termasuk kekurangan berat badan tingkat berat!';
+        } else if (hasil <= 17.0 && hasil <= 18.4) {
+          tampilHasilAkhir = 'Kamu termasuk kategori berbadan Kurus, dan termasuk kekurangan berat badan tingkat ringan!';
+        }
+        // else if (hasil <= 18.4) {
+        //   tampilHasilAkhir = 'Kamu termasuk kategori berbadan Kurus, dan termasuk kekurangan berat badan tingkat ringan!';
+        // }
+        else if (hasil >= 18.5 && hasil <= 25.0) {
+          tampilHasilAkhir = 'Selamat, kamu termasuk kategori berbadan Normal!';
+        }
+        //  else if (hasil <= 25.0) {
+        //   tampilHasilAkhir = 'Selamat, kamu termasuk kategori berbadan Normal!';
+        // }
+        else if (hasil >= 25.1 && hasil <= 27.0) {
+          tampilHasilAkhir = 'Kamu termasuk kategori berbadan Gemuk tingkat ringan!';
+        }
+        // else if (hasil <= 27.0) {
+        //   tampilHasilAkhir = 'Kamu termasuk kategori berbadan Gemuk tingkat ringan!';
+        // }
+        else if (hasil > 27.0) {
+          tampilHasilAkhir = 'Kamu termasuk kategori berbadan Gemuk tingkat berat!';
+        }
+
+        document.querySelector('.reset').addEventListener('click', function () {
+          // Me-reset form input dan output
+          const beratBadan = (document.querySelector('.bBadan').value = '');
+
+          const tinggiBadanCm = (document.querySelector('.tBadan').value = '');
+
+          document.querySelector('.kategori').innerHTML = '';
+
+          document.querySelector('.hasil').innerHTML = '';
+        });
+
+        document.querySelector('.kategori').innerHTML = tampilHasilAkhir;
+        // console.log(tampilHasilAkhir);
+      });
+    </script>
+  </body>
+</html>
